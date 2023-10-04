@@ -6,25 +6,36 @@ import matplotlib.pyplot as plt
 
 import data
 import models
+import recommendations
 
 
 # Data stage
 print('Reading in data')
-data = data.Compas('input/compas.csv')
+Data = data.Compas('input/compas.csv')
 
 # Data bias
 # TODO: implement basic bias (concept shift, reporting bias) within each module
 
 # Model stage
-model = models.StandardLogit(data.X_train, data.y_train)
-model.fit()
+Model = models.StandardLogit(Data.X_train, Data.y_train)
+Model.fit()
 
 # Prediction stage
-print(model.predictions(data.X_test[0:10]))
+print(Model.predict(Data.X_test[0:10]))
+# TODO: implement unconditional calibration evaluator
+# TODO: implement conditional calibration evaluator
 
 
 # Recommendations stage
-print(model.recommendations(data.X_test[0:10]))
+print(Model.recommend(Data.X_test[0:10]))
+# TODO: implement IJDI evaluator
+# TODO: implement UJDI evaluator
+# Basic confusion matrix evaluator
+print('All: ',recommendations.performance_metrics(Model.model, Data.X_test, Data.y_test))
+aa_idx = Data.get_idx('race_African-American',1)
+cc_idx = Data.get_idx('race_Caucasian',1)
+print('White: ',recommendations.performance_metrics(Model.model, Data.X_test, Data.y_test, cc_idx))
+print('Black: ',recommendations.performance_metrics(Model.model, Data.X_test, Data.y_test, aa_idx))
 
 
 # Decisions stage

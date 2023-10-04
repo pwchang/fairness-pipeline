@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
 
 class Compas:
     def __init__(self, filename):
@@ -24,9 +25,11 @@ class Compas:
         self.X_train, self.X_test = self.train_df.drop(columns=X_drop), self.test_df.drop(columns=X_drop)
         self.y_train, self.y_test = self.train_df['two_year_recid'], self.test_df['two_year_recid']
 
+        scaler = MinMaxScaler().fit(self.X_train)
+        self.X_train = scaler.transform(self.X_train)
+        self.X_test = scaler.transform(self.X_test)
 
     # Example use: aa_idx = np.where(compas_race_df['race_African-American']==1)[0]
-    @staticmethod
-    def get_idx(df,column,trait):
-        idx = np.where(df[column]==trait)[0]
+    def get_idx(self, column, trait):
+        idx = np.where(self.test_df[column]==trait)[0]
         return idx
