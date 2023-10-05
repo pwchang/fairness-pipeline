@@ -7,7 +7,8 @@ def performance_metrics(model, X_test, y_true, idx=[]):
     if len(idx)==0:
         idx = np.arange(len(y_true))
     X_test = X_test[idx]
-    y_true = y_true.values[idx]
+    #y_true = y_true.values[idx]
+    y_true = y_true[idx]
 
     y_pred = model.predict(X_test)
     model_accuracy = model.score(X_test, y_true)
