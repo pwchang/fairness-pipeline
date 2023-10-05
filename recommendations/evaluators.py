@@ -21,3 +21,6 @@ def performance_metrics(model, X_test, y_true, idx=[]):
 
     return dict(zip(['model_accuracy', 'fpr', 'fnr', 'precision', 'recall'],
                     [model_accuracy, fpr, fnr, precision, recall]))
+
+def ijdi(model, X_test, y_true, idx=[]):
+    return 1
